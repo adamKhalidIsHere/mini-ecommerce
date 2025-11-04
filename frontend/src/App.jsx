@@ -13,6 +13,7 @@ import CategoryPage from "./pages/CategoryPage";
 import CartPage from "./pages/CartPage";
 import { useCartStore } from "./stores/useCartStore";
 import SuccessCheckout from "./pages/SuccessCheckout";
+import CancelCheckout from "./pages/CancelCheckout";
 
 function App() {
   const { getProfile, checkingAuth, user, refreshToken } = useAuthStore();
@@ -59,6 +60,10 @@ function App() {
           <Route
             path="/purchase-success"
             element={user ? <SuccessCheckout /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/purchase-cancel"
+            element={user ? <CancelCheckout /> : <Navigate to={"/login"} />}
           />
         </Routes>
       </div>
