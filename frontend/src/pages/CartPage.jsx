@@ -9,7 +9,7 @@ const CartPage = () => {
     useCartStore();
 
   return (
-    <div className="px-30 py-15 flex justify-between">
+    <div className="px-30 py-15 flex justify-between max-md:flex-col max-md:px-15">
       <div className="">
         <button
           disabled={cartItems.length === 0}
@@ -22,11 +22,11 @@ const CartPage = () => {
         </button>
         {cartItems.map((item, i) => (
           <div
-            className="bg-zinc-300 w-150 h-35 px-10 py-5 mb-2 rounded-lg flex justify-between relative"
+            className="bg-zinc-300 w-150 h-35 px-10 py-5 mb-2 rounded-lg flex justify-between relative max-md:flex-col max-md:w-100 max-md:h-75 max-md:items-center"
             key={i}
           >
             <p className="font-semibold text-sm w-20">{item.name}</p>
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between items-center">
               <p className="font-semibold">{item.price}$</p>
               <div className="flex items-center mt-2">
                 <button

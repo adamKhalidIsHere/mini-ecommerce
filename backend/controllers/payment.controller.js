@@ -7,7 +7,9 @@ export const createCheckoutSession = async (req, res) => {
     const { products, couponCode } = req.body;
 
     if (!Array.isArray(products) || products.length === 0) {
-      return res.status(400).json({ error: "Invalid or empty products array" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or empty products array" });
     }
 
     let totalAmount = 0;
@@ -156,4 +158,12 @@ async function createNewCoupon(userId) {
   await newCoupon.save();
 
   return newCoupon;
+}
+
+async function inActiveCoupon(userId, couponCode) {
+  const coupon = await Coupon.findOne({ userId, code: couponCode });
+  if (coupon) {
+    coupon.isActive = false;
+    await coupon.save();
+  }
 }

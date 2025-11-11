@@ -15,6 +15,7 @@ const SuccessCheckout = () => {
 					sessionId,
 				});
 				clearCart();
+				
 			} catch (error) {
 				console.log(error);
 			} finally {

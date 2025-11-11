@@ -61,7 +61,8 @@ export const useCartStore = create((set, get) => ({
     try {
       await axios.put(`/cart/${productId}`, { quantity });
       if (quantity === 0) {
-        get().removeFromCart(productId);
+          get().removeFromCart(productId);
+        toast.success("Item removed from cart")
         return;
       }
       set((state) => ({
@@ -73,8 +74,8 @@ export const useCartStore = create((set, get) => ({
         }),
       }));
       get().calculateTotals();
-    } catch (error) {
-      toast.error(error.response?.data?.message);
+      } catch (error) {
+    toast.error(error.response?.data?.message);
       console.log(error.message);
     }
   },

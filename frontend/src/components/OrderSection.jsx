@@ -4,7 +4,7 @@ import { useAuthStore } from "../stores/useAuthStore";
 import { useCartStore } from "../stores/useCartStore";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = await loadStripe(
+await loadStripe(
   "pk_test_51RNYGvRv07eV2EsoqZjjo2FpjH6TkvbuDuWZP4OOJ74CUaJkE2Ikk33lxRDz5jitKJRrlBsY9FevPp7sim0Ihnla00Ga7r1TKq"
 );
 
@@ -19,13 +19,20 @@ const OrderSection = () => {
   const formattedTotal = total.toFixed(2);
 
   const handlePayment = async () => {
-    if (!user) toast.error("You must have an account first!");
-    const res = await axios.post("/payment/create-checkout-session", {
-      products: cartItems,
-      couponCode: coupon ? coupon.code : null,
-    });
-    const session = res.data;
-    window.location.href = session.sessionUrl;
+    if (!user) {
+      toast.error("You must have an account first!");
+      return;
+    }
+    try {
+      const res = await axios.post("/payment/create-checkout-session", {
+        products: cartItems,
+        couponCode: coupon ? coupon.code : null,
+      });
+      const session = res.data;
+      window.location.href = session.sessionUrl;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div className="mb-4">

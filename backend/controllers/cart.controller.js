@@ -61,7 +61,7 @@ export const addToCart = async (req, res) => {
     const user = req.user;
     const product = await Product.findById(productId);
     if (quantity < 1) {
-      res.status(400).json({message: "Quantity can't be less than 1"})
+      res.status(400).json({ message: "Quantity can't be less than 1" });
     }
 
     if (!product) return res.status(404).json({ message: "Product not found" });
@@ -93,11 +93,6 @@ export const updateQuantity = async (req, res) => {
     );
 
     if (existingItem) {
-      if (quantity === 0) {
-        user.cartItems = user.cartItems.filter(
-          (item) => item._id.toString() !== productId.toString()
-        );
-      }
       existingItem.quantity = quantity;
       await user.save();
       res.status(200).json(user.cartItems);
